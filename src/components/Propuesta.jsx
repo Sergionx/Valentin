@@ -12,7 +12,7 @@ const containerVariants = {
 export default function Propuesta() {
   return (
     <motion.div
-      className="flex justify-center gap-5 w-full"
+      className="flex flex-wrap justify-center gap-5 w-full"
       variants={containerVariants}
       initial="hidden"
       animate="visible"
