@@ -2,12 +2,14 @@ import { motion, stagger, useAnimate, useAnimation } from "framer-motion";
 import { randomNumberBetween } from "../../utils";
 
 // FIXME - Que se muestre por detras
-export default function CoolButton({ text }) {
+export default function CoolButton({ text, onClick }) {
   const [scope, animate] = useAnimate();
 
   const sparkles = Array.from({ length: 20 });
 
-  const handleClick = async () => {
+  const handleClick =  () => {
+    onClick()
+
     const sparklesAnimation = sparkles.map((_, index) => [
       `.sparkle-${index}`,
       {
