@@ -1,21 +1,22 @@
-import { motion } from "framer-motion";
 import CoolButton from "./buttons/CoolButton";
+import NoButtton from "./buttons/NoButtton";
+import JSConfetti from "js-confetti";
 
 export default function Decision() {
+
+  function onAccept(){
+    const jsConfetti = new JSConfetti();
+
+  jsConfetti.addConfetti({
+    emojis: ["❤️", "💕", "💖", "💞", "💘", "💝"],
+  });
+  }
+
   return (
     <section className="flex justify-evenly">
-      <CoolButton text="Acepto" >
+      <CoolButton text="Acepto" onClick={onAccept}></CoolButton>
 
-      </CoolButton>
-
-      <motion.button
-        className="border-2 border-[#da479c]
-        rounded-full px-8 py-4 font-bold
-        text-[#da479c]
-        "
-      >
-        No
-      </motion.button>
+      <NoButtton />
     </section>
   );
 }
