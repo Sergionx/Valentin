@@ -1,54 +1,74 @@
 import { motion, stagger, useAnimate, useAnimation } from "framer-motion";
 import { randomNumberBetween } from "../../utils";
+import { useRef } from "react";
 
 // FIXME - Que se muestre por detras
 export default function CoolButton({ text, onClick }) {
   const [scope, animate] = useAnimate();
+  const intervalRef = useRef(null);
 
-  const sparkles = Array.from({ length: 20 });
+  const sparkles = Array.from({ length: 10 });
 
-  const handleClick =  () => {
-    onClick()
+  function onHoverStart() {
+    console.log("hovering");
+    const totalTime = sparkles.length * 400;
+    intervalRef.current = setInterval(() => {
+      const sparklesReset = sparkles.map((_, index) => [
+        `.sparkle-${index}`,
+        {
+          x: 0,
+          y: 0,
+        },
+        {
+          duration: 0.000001,
+        },
+      ]);
+      animate([...sparklesReset]);
+      startSparking()
+    }, totalTime);
+    startSparking();
+  }
 
-    const sparklesAnimation = sparkles.map((_, index) => [
-      `.sparkle-${index}`,
-      {
-        x: randomNumberBetween(-100, 100),
-        y: randomNumberBetween(-100, 100),
-        scale: randomNumberBetween(1.5, 2.5),
-        opacity: 1,
-      },
-      {
-        duration: 0.4,
-        at: "<",
-      },
-    ]);
+  function startSparking() {
+    console.log("sparkling")
+    const sparklesAnimation = sparkles.map((_, index) => {
+      const sparkleSelector = `.sparkle-${index}`;
 
-    const sparklesFadeOut = sparkles.map((_, index) => [
-      `.sparkle-${index}`,
-      {
-        opacity: 0,
-        scale: 0,
-      },
-      {
-        duration: 2,
-        at: "<",
-      },
-    ]);
+      const sparkleAppear = [
+        sparkleSelector,
+        {
+          x: randomNumberBetween(-100, 100),
+          y: randomNumberBetween(-100, 100),
+          scale: randomNumberBetween(1.5, 2.5),
+          opacity: 1,
+        },
+        {
+          at: "<",
+          duration: 0.4,
+        },
+      ];
 
-    const sparklesReset = sparkles.map((_, index) => [
-      `.sparkle-${index}`,
-      {
-        x: 0,
-        y: 0,
-      },
-      {
-        duration: 0.000001,
-      },
-    ]);
+      const sparkleFadeOut = [
+        sparkleSelector,
+        {
+          opacity: 0,
+          scale: 0,
+        },
+        {
+          at: "+0.1",
+          duration: 2,
+        },
+      ];
 
+      return [sparkleAppear, sparkleFadeOut];
+    });
+
+    animate([...sparklesAnimation.flat()]);
+  }
+
+  function handleClick() {
+    onClick();
     animate([
-      ...sparklesReset,
       [
         ".letter",
         {
@@ -59,7 +79,6 @@ export default function CoolButton({ text, onClick }) {
           delay: stagger(0.05),
         },
       ],
-      ...sparklesAnimation,
       [
         ".letter",
         {
@@ -69,15 +88,34 @@ export default function CoolButton({ text, onClick }) {
           duration: 0.0000001,
         },
       ],
-      ...sparklesFadeOut,
     ]);
-  };
+  }
+
+  function onHoverEnd() {
+    clearInterval(intervalRef.current);
+    intervalRef.current = null;
+
+    const sparklesFadeOut = sparkles.map((_, index) => [
+      `.sparkle-${index}`,
+      {
+        opacity: 0,
+        scale: 0,
+      },
+      {
+        duration: 1,
+        at: "<",
+      },
+    ]);
+    animate(sparklesFadeOut);
+  }
 
   return (
-    <div ref={scope}>
+    <div ref={scope} className="relative z-10">
       <motion.button
         onClick={handleClick}
         ref={scope}
+        onHoverStart={onHoverStart}
+        onHoverEnd={onHoverEnd}
         className="bg-gradient-to-r from-[#ef93c9] to-[#da479c]
         shadow text-xl relative 
         rounded-full px-8 pt-4 pb-3 font-bold"
@@ -121,7 +159,10 @@ function Text({ text }) {
 
 function Sparkles({ sparkles }) {
   return (
-    <span aria-hidden className="pointer-events-none absolute inset-0 block ">
+    <motion.span
+      aria-hidden
+      className="pointer-events-none absolute inset-0 block"
+    >
       {sparkles.map((_, index) => (
         <svg
           key={index}
@@ -134,16 +175,17 @@ function Sparkles({ sparkles }) {
           fill="none"
           strokeLinecap="round"
           strokeLinejoin="round"
-          className={`absolute left-1/2 top-1/2 -z-10 opacity-0 sparkle-${index}`}
+          className={`absolute left-1/2 top-1/2 opacity-0 -z-10 
+            sparkle sparkle-${index}`}
         >
           <path stroke="none" d="M0 0h24v24H0z" fill="none" />
           <path
             d="M6.979 3.074a6 6 0 0 1 4.988 1.425l.037 .033l.034 -.03a6 6 0 0 1 4.733 -1.44l.246 .036a6 6 0 0 1 3.364 10.008l-.18 .185l-.048 .041l-7.45 7.379a1 1 0 0 1 -1.313 .082l-.094 -.082l-7.493 -7.422a6 6 0 0 1 3.176 -10.215z"
-            stroke-width="0"
-            fill="#e13838"
+            strokeWidth="0"
+            fill="#d82c2c"
           />
         </svg>
       ))}
-    </span>
+    </motion.span>
   );
 }
