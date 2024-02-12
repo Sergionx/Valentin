@@ -1,7 +1,6 @@
 import { motion, stagger, useAnimate, useAnimation } from "framer-motion";
 import { randomNumberBetween } from "../../utils";
 
-// TODO - QUe saen corazones
 // FIXME - Que se muestre por detras
 export default function CoolButton({ text }) {
   const [scope, animate] = useAnimate();
@@ -123,15 +122,23 @@ function Sparkles({ sparkles }) {
     <span aria-hidden className="pointer-events-none absolute inset-0 block ">
       {sparkles.map((_, index) => (
         <svg
-          className={`absolute left-1/2 top-1/2  -z-10 opacity-0 sparkle-${index}`}
           key={index}
-          viewBox="0 0 122 117"
-          width="10"
-          height="10"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          strokeWidth="1.5"
+          stroke="currentColor"
+          fill="none"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          className={`absolute left-1/2 top-1/2 -z-10 opacity-0 sparkle-${index}`}
         >
+          <path stroke="none" d="M0 0h24v24H0z" fill="none" />
           <path
-            className="fill-blue-600"
-            d="M64.39,2,80.11,38.76,120,42.33a3.2,3.2,0,0,1,1.83,5.59h0L91.64,74.25l8.92,39a3.2,3.2,0,0,1-4.87,3.4L61.44,96.19,27.09,116.73a3.2,3.2,0,0,1-4.76-3.46h0l8.92-39L1.09,47.92A3.2,3.2,0,0,1,3,42.32l39.74-3.56L58.49,2a3.2,3.2,0,0,1,5.9,0Z"
+            d="M6.979 3.074a6 6 0 0 1 4.988 1.425l.037 .033l.034 -.03a6 6 0 0 1 4.733 -1.44l.246 .036a6 6 0 0 1 3.364 10.008l-.18 .185l-.048 .041l-7.45 7.379a1 1 0 0 1 -1.313 .082l-.094 -.082l-7.493 -7.422a6 6 0 0 1 3.176 -10.215z"
+            stroke-width="0"
+            fill="#e13838"
           />
         </svg>
       ))}
