@@ -26,8 +26,7 @@ export default function Decision() {
 
   return (
     <>
-      <section className="flex items-center justify-evenly 
-      absolute w-full top-1/2 translate-y-1/2">
+      <section className="flex items-center justify-evenly mt-32">
         <CoolButton text="Acepto" onClick={onAccept}></CoolButton>
 
         <NoButtton />
