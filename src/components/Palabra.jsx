@@ -17,7 +17,6 @@ export default function Palabra({ viewBox, width, path }) {
     <motion.svg
       viewBox={viewBox}
       width={width}
-      height="100pt"
       xmlns="http://www.w3.org/2000/svg"
       className="stroke-1 stroke-[#561b1b] h-64"
     >
