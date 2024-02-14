@@ -31,18 +31,18 @@ export default function Decision() {
 
         <NoButtton />
       </section>
+
       <AppearingText appear={appearText}>
-        <main className="flex flex-col justify-center items-center h-full">
+        <main
+          className="flex flex-col justify-center items-center 
+            h-full px-16"
+        >
           <h2 className="text-5xl text-[#dc6666] !leading-[5.5rem]">
             Sabia que dirias que si.{" "}
             <span className="font-bold text-[#d14b4b]">Te amo Pichi</span>
           </h2>
 
-          <img
-            src={GIFCute}
-            alt="TE AMO AMOR"
-            className="w-96 mt-16 "
-          />
+          <img src={GIFCute} alt="TE AMO AMOR" className="w-96 mt-16 " />
         </main>
       </AppearingText>
     </>

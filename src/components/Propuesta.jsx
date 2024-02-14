@@ -14,7 +14,7 @@ export default function Propuesta() {
   return (
     <motion.div
       className="flex flex-wrap justify-center 
-        gap-x-5 gap-y-0 w-full"
+        gap-x-5 gap-y-0 w-full px-16"
       variants={containerVariants}
       initial="hidden"
       animate="visible"
