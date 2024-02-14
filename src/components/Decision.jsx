@@ -26,14 +26,15 @@ export default function Decision() {
 
   return (
     <>
-      <section className="flex justify-evenly">
+      <section className="flex items-center justify-evenly 
+      absolute w-full top-1/2 translate-y-1/2">
         <CoolButton text="Acepto" onClick={onAccept}></CoolButton>
 
         <NoButtton />
       </section>
       <AppearingText appear={appearText}>
         <main className="flex flex-col justify-center items-center h-full">
-          <h2 className="text-5xl text-[#dc6666]">
+          <h2 className="text-5xl text-[#dc6666] !leading-[5.5rem]">
             Sabia que dirias que si.{" "}
             <span className="font-bold text-[#d14b4b]">Te amo Pichi</span>
           </h2>
