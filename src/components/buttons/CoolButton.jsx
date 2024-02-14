@@ -11,7 +11,8 @@ export default function CoolButton({ text, onClick }) {
 
   function onHoverStart() {
     console.log("hovering");
-    const totalTime = sparkles.length * 400;
+
+    const totalTime = startSparking();
     intervalRef.current = setInterval(() => {
       const sparklesReset = sparkles.map((_, index) => [
         `.sparkle-${index}`,
@@ -24,13 +25,11 @@ export default function CoolButton({ text, onClick }) {
         },
       ]);
       animate([...sparklesReset]);
-      startSparking()
+      startSparking();
     }, totalTime);
-    startSparking();
   }
 
   function startSparking() {
-    console.log("sparkling")
     const sparklesAnimation = sparkles.map((_, index) => {
       const sparkleSelector = `.sparkle-${index}`;
 
@@ -63,7 +62,8 @@ export default function CoolButton({ text, onClick }) {
       return [sparkleAppear, sparkleFadeOut];
     });
 
-    animate([...sparklesAnimation.flat()]);
+    const { duration } = animate([...sparklesAnimation.flat()]);
+    return duration * 1000;
   }
 
   function handleClick() {
@@ -110,7 +110,7 @@ export default function CoolButton({ text, onClick }) {
   }
 
   return (
-    <div ref={scope} className="relative z-10">
+    <div ref={scope} className="">
       <motion.button
         onClick={handleClick}
         ref={scope}
